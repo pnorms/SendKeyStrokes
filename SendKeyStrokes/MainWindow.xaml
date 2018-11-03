@@ -1,0 +1,72 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SendKeyStrokes"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" x:Class="SendKeyStrokes.MainWindow"
+        mc:Ignorable="d"
+        Title="SendKeyStrokes" Height="230.963" Width="335.862" Foreground="Black">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="TextBoxBorder" EndPoint="0,20" MappingMode="Absolute" StartPoint="0,0">
+            <GradientStop Color="#ABADB3" Offset="0.05"/>
+            <GradientStop Color="#E2E3EA" Offset="0.07"/>
+            <GradientStop Color="#E3E9EF" Offset="1"/>
+        </LinearGradientBrush>
+        <Style x:Key="Status" BasedOn="{x:Null}" TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Themes:ListBoxChrome x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderFocused="{TemplateBinding IsKeyboardFocusWithin}" SnapsToDevicePixels="true">
+                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Themes:ListBoxChrome>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="109*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="41*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="lTime" Content="Send Delay:" HorizontalAlignment="Left" Height="27" Margin="153,1,0,0" VerticalAlignment="Top" Width="71" Grid.Column="1"/>
+        <Label x:Name="lPassword" Content="Password: " HorizontalAlignment="Left" Margin="5,64,0,0" VerticalAlignment="Top" Width="71" Height="25" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Button x:Name="bSend" TabIndex="4" Content="Send" Grid.Column="1" HorizontalAlignment="Left" Margin="18,86,0,0" VerticalAlignment="Top" Width="75" Click="bSend_Click" IsDefault="True" Grid.Row="1" Height="20"/>
+        <TextBox x:Name="tStatus" HorizontalAlignment="Left" Height="42" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2" IsReadOnly="True" Text="After pasting your text above, click send and place your cursor in the target field." Style="{DynamicResource Status}" Grid.Row="1"/>
+        <Button x:Name="bClose" Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="149,86,0,0" Click="bClose_Click" Grid.Row="1" Height="20"/>
+        <Label x:Name="lUsername" Content="Username: " HorizontalAlignment="Left" Margin="5,12,0,0" VerticalAlignment="Top" Width="71" Height="26" Grid.ColumnSpan="2"/>
+        <PasswordBox x:Name="tPassword" TabIndex="3" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="22" Width="300" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <TextBox x:Name="tUsername" TabIndex="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" IsEnabled="False"/>
+        <CheckBox x:Name="cUsername" TabIndex="1" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Checked="cUsername_Checked" Unchecked="cUsername_Unchecked" Height="15" Width="20" IsChecked="True"/>
+        <TextBox x:Name="tTime" TabIndex="0" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="227,5,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="41" AutomationProperties.Name="tSendTime"/>
+    </Grid>
+</Window>
